@@ -22,12 +22,12 @@ class ResponseStatus{
   protected $responseStatus = [];
 
   function __construct($data){
-     $this->responseStatus['version'] = $data['v'];
+     //$this->responseStatus['version'] = $data['v'];
      $this->responseStatus['code'] = $data['code'];
      $this->responseStatus['message'] = $data['msg'];
   }
 
-  function getVersion() {return $this->responseStatus['version']; }
+  //function getVersion() {return $this->responseStatus['version']; }
   function getCode() {return $this->responseStatus['code'];}
   function getMessage() {return $this->responseStatus['message'];}
 };
