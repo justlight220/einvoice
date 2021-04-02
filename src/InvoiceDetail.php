@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  * Copyright 2015 Pichu Chen, TIH
  *
@@ -22,27 +22,28 @@ use PichuChen\einvoice\InvoiceHeaderData;
 use PichuChen\einvoice\InvoiceDetailItem;
 
 class InvoiceDetail implements \JsonSerializable {
-  protected $responseStatus;
-  protected $invoiceHeaderData;
-  private $details = [];
+    protected $responseStatus;
+    protected $invoiceHeaderData;
+    private $details = [];
 
-  function __construct($data){
-    $this->responseStatus = new ResponseStatus($data);
-    $data['invDate'] = sprintf("%04d/%02d/%02d", substr($data['invDate'],0,4), substr($data['invDate'],4,2), substr($data['invDate'],6,2) );
+    function __construct($data){
+        $this->responseStatus = new ResponseStatus($data);
+        $data['invDate'] = sprintf("%04d/%02d/%02d", substr($data['invDate'],0,4), substr($data['invDate'],4,2), substr($data['invDate'],6,2) );
 
-    $this->invoiceHeaderData = new InvoiceHeaderData($data);
-    foreach($data['details'] as $k => $v){
-      $this->details[] = new InvoiceDetailItem($v);
+        $this->invoiceHeaderData = new InvoiceHeaderData($data);
+        foreach($data['details'] as $k => $v){
+            $this->details[] = new InvoiceDetailItem($v);
+        }
     }
-  }
 
-  function getDetails(){ return $this->details;}
-  function getNumber() {return $this->invoiceHeaderData->invNum;}
-  function getDate() {return $this->invoiceHeaderData->invDate;}
-  function getSellerName() {return $this->invoiceHeaderData->sellerName;}
-  function getStatus() {return $this->invoiceHeaderData->invStatus;}
-  function getPeriod() {return $this->invoiceHeaderData->invPeriod;}
-  function getResponseStatus() {return $this->responseStatus;}
+    function getDetails(){ return $this->details;}
+    function getNumber() {return $this->invoiceHeaderData->invNum;}
+    function getDate() {return $this->invoiceHeaderData->invDate;}
+    function getSellerName() {return $this->invoiceHeaderData->sellerName;}
+    function getStatus() {return $this->invoiceHeaderData->invStatus;}
+    function getPeriod() {return $this->invoiceHeaderData->invPeriod;}
+    function getResponseStatus() {return $this->responseStatus;}
+    function getTime(){return $this->invoiceHeaderData->invoiceTime;}
 
     /**
      *
@@ -54,6 +55,7 @@ class InvoiceDetail implements \JsonSerializable {
         return [
             "number" => $this->getNumber(),
             "date" => $this->getDate(),
+            "time" => $this->getTime(),
             "sellerName" => $this->getSellerName(),
             "status" => $this->getStatus(),
             "period" => $this->getPeriod(),
